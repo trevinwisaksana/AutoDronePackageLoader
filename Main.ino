@@ -47,7 +47,7 @@ void setup() {
   wristServo.attach(6);
   gripperServo.attach(5);
 
-
+  // Setup each servo to the middle point
   SET_SERVO_ANGLE(SERVO_BASE, 87); // Base
   SET_SERVO_ANGLE(SERVO_SHOULDER, 92); // Shoulder
   SET_SERVO_ANGLE(SERVO_ELBOW, 94); // Elbow
@@ -58,17 +58,12 @@ void setup() {
 }
 
 void loop() {
-  int servo, angle;
-  
-  /* Testing purposes
-  // BASE SERVO can only go between 40 - 150
-  // SHOULDER SERVO can only go between 90 - 175
-  // ELBOW SERVO can only go between 10 - 90
-  // ARM SERVO can only go between 60 - 180
-  // WRIST SERVO can only go between 0 - 180
-  // GRIPPER SERVO can only go between 0 - 40
+  /* 
+    Servo and Angle variables used to 
+    store the values of the servo number 
+    and the angle it should move to.
   */
-  // Loading state
+  int servo, angle;
 
   unsigned long currentMillis = millis();
 
@@ -77,59 +72,10 @@ void loop() {
       
   }
 
-//  Serial.println("Enter Servo # and Servo Angle #");
+  // Scan observes the Serial monitor for values
   if (scan(&servo, &angle) ) {
      Serial.println("Set Servo");
      SET_SERVO_ANGLE(servo, angle); 
   }
 
-/*
-  SET_SERVO_ANGLE(SERVO_BASE, 87); // Base
-  SET_SERVO_ANGLE(SERVO_SHOULDER, 92); // Shoulder
-  SET_SERVO_ANGLE(SERVO_ELBOW, 94); // Elbow
-  SET_SERVO_ANGLE(SERVO_ARM, 90); // Arm
-  SET_SERVO_ANGLE(SERVO_WRIST, 90); // Wrist
-  SET_SERVO_ANGLE(SERVO_GRIPPER, 90); // Gripper
-*/
-  
-  
-  /*
-  shoulderServo.write(140);
-  
-  elbowServo.write(20);
-  
-  fingerServo.write(30);
-  
-  armServo.write(130);
-  
-  fingerServo.write(10);
-  
-  shoulderServo.write(90);
-  
-  elbowServo.write(60);
-  
-  baseServo.write(168); // Base will turn to the other side
-  
-  shoulderServo.write(90);
-  
-  elbowServo.write(90);
-  
-  armServo.write(180);
-  
-  fingerServo.write(30);
-      
-     
-
-  baseServo.write(90);
-  
-  shoulderServo.write(160);
-  
-  elbowServo.write(90);
-  
-  armServo.write(180);
-  
-  wristServo.write(90);
-  
-  fingerServo.write(10);
-  */
 }
