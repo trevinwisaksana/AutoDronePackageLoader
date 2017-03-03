@@ -1,22 +1,26 @@
 #include "Servo_Helper.h"
 
 /* List of acceleration and deceleration values */
-/* Excel formula count from 0 by 4 to 180 using =INT(90*(1-(COS(RADIANS(#CELL_COLUMN#))))) */
-/* for (int NUMBER = 0; NUMBER <= 180; NUMBER += 4)
- *   accel_table[NUMBER / 4] = INT(90*(1-(COS(RADIANS(NUMBER)))));
+/* Excel formula count from 0 by 4 to 180 using =INT(5000*(1-(COS(RADIANS(#CELL_COLUMN#))))) */
+/* for (int NUMBER = 0; NUMBER <= 100; NUMBER += 1)
+ *   accel_table[NUMBER] = INT(5000*(1-(COS(RADIANS(NUMBER)))));
  */
 
 
 #define SERVOS_STOPPED 0
 #define SERVOS_INITIALIZE 1
 #define SERVOS_RUNNING 2
- 
-int accel_table[46] = {0, 0, 0, 1, 3, 5, 7, 10, 13, 17, 
-                      21, 25, 29, 34, 39, 44, 50, 56, 62, 
-                      68, 74, 80, 86, 93, 99, 105, 111, 117,
-                      123, 129, 134, 140, 145, 150, 154, 158, 
-                      162, 166, 169, 172, 174, 176, 178, 179, 
-                      179, 180};
+
+int accel_table[101] = {0, 2, 9, 22, 39, 61, 88, 120, 157, 198, 244, 295, 351, 411,
+                       475, 544, 618, 696, 778, 864, 954, 1049, 1147, 1249, 1355, 
+                       1464, 1577, 1693, 1812, 1935, 2061, 2189, 2320, 2454, 2591, 
+                       2730, 2871, 3014, 3159, 3306, 3454, 3605, 3756, 3909, 4063, 
+                       4217, 4373, 4529, 4686, 4842, 4999, 5157, 5313, 5470, 5626, 
+                       5782, 5936, 6090, 6243, 6394, 6545, 6693, 6840, 6985, 7128, 
+                       7269, 7408, 7545, 7679, 7810, 7938, 8064, 8187, 8306, 8422, 
+                       8535, 8644, 8750, 8852, 8950, 9045, 9135, 9221, 9303, 9381, 
+                       9455, 9524, 9588, 9648, 9704, 9755, 9801, 9842, 9879, 9911, 
+                       9938, 9960, 9977, 9990, 9997, 10000};
 
 typedef struct servo_positions_t {
   int time_span;
@@ -24,18 +28,42 @@ typedef struct servo_positions_t {
 } servo_positions;
 
 /* Initialize the servo_positions_t struct */
-servo_positions myServosPositions[] = { { 1000, {90, 90, 90, 90, 90, 90} },
-                                      { 2000, {170, 90, 90, 90, 120, 60} },
-                                      { 1000, {20, 90, 90, 90, 90, 120} },
-                                      { 1000, {90, 90, 90, 90, 90, 120} },
-                                      {    0, {0, 0, 0, 0, 0, 0} } };
+servo_positions myServosPositions[] = { { 3000, {150, 90,  90, 90, 90,  60} }, // Base rotation
+                                      { 3000,   {150, 60,  20, 30, 90,  60} }, // Shoulder moves lower
+                                      { 2000,   {150, 45,  20, 50, 90,  60} }, // Shoulder moves gripper to position
+                                      { 1000,   {150, 35,  20, 50, 90,  85} }, // Gripper grips
+                                      { 2000,   {150, 130, 10, 30, 90,  85} }, // Shoulder moves back
+                                      { 2000,   { 40, 130, 10, 30, 90,  85} }, // Rotate the base
+                                      { 2000,   { 40,  60, 20, 50, 90,  85} }, // Lowers the shoulder
+                                      { 2000,   { 40,  10, 90, 90, 90,  85} }, // Position gripper
+                                      { 2000,   { 40,  10, 90, 90, 10,  85} }, // Turn gripper
+                                      { 1000,   { 40,  10, 90, 90, 10,  60} }, // Release package
+                                      { 2000,   { 40,  80, 20, 40, 90,  85} }, // Retract arm
+                                      { 2000,   { 40,  80, 90, 90, 90,  85} }, // Slowly move elbow and arm
+                                      
+                                      { 5000,   {90,  90, 90, 90, 90,  85} }, // Return back to normal position
+       
+                                      {    0,   {0, 0, 0, 0, 0, 0} } };
 
 /* Initialize the servo_positions_t struct */
-servo_positions myServosPositions2[] = { { 1000, {90, 90, 90, 90, 90, 90} },
-                                      { 2000, {120, 120, 120, 120, 120, 120} },
-                                      { 3000, {80, 160, 60, 170, 100, 80} },
-                                      { 1000, {90, 90, 90, 90, 90, 90} },
-                                      {    0, {0, 0, 0, 0, 0, 0} } };
+servo_positions myServosPositions2[] =  { { 3000, {150, 90,  90, 90, 90,  60} }, // Base rotation
+                                        { 3000,   {150, 60,  20, 30, 10,  60} }, // Shoulder moves lower
+                                        { 2000,   {150, 35,  20, 50, 10,  60} }, // Shoulder moves gripper to position
+                                        { 1000,   {150, 35,  20, 50, 10,  88} }, // Gripper grips
+                                        { 2000,   {150, 130, 10, 30, 10,  88} }, // Shoulder moves back
+                                        { 2000,   { 40, 130, 10, 30, 10,  88} }, // Rotate the base
+                                        { 2000,   { 40,  60, 20, 50, 10,  88} }, // Lowers the shoulder
+                                        { 2000,   { 40,  9, 90, 90, 10,  88} }, // Position gripper
+                                        { 2000,   { 40,  9, 90, 90, 10,  88} }, // Turn gripper
+                                        { 1000,   { 40,  9, 90, 90, 10,  60} }, // Release package
+                                        { 2000,   { 40,  30, 40, 40, 10,  85} }, // Retract arm
+                                        { 3000,   { 40,  150, 20, 30, 10,  85} }, // Retract shoulder
+                                        { 1000,   { 40,  120, 90, 90, 90,  85} }, // Slowly move elbow and arm
+                                        { 2000,   { 40,  90, 90, 90, 90,  85} }, // Slowly move elbow and arm
+                                        
+                                        { 5000,   {90,  90, 90, 90, 90,  85} }, // Return back to normal position
+         
+                                        {    0,   {0, 0, 0, 0, 0, 0} } };
 
 servo_positions *pCurrent;
 int              servos_step;
@@ -45,7 +73,7 @@ long             servos_last_time;
 int              servos_start_angle[NUMBER_OF_SERVOS];
 
 void testServos(void) {
-  startServoSequence (myServosPositions);
+  startServoSequence (myServosPositions2);
 }
 
 bool startServoSequence (struct servo_positions_t * pSequence) {
@@ -118,14 +146,7 @@ void updateServos(void) {
           servo_start     = servos_start_angle[index];
           servo_end       = pCurrent[servos_step].servo_angles[index];
           servo_span      = servo_end - servo_start;
-          servo_new_angle = servo_start + (((long)servo_span) * percentage) / 100L;  // remove scaling by 100 here
-//          setServoAngle(index + 1, servo_new_angle);
-//          Serial.print(servo_new_angle, DEC);
-//          Serial.print(" ");
-          // 
-//          Serial.print(percentage, DEC);
-//          Serial.print(" ");
-          servo_new_angle = servo_start + (((long)servo_span) * (accel_table[(((long)percentage) * 1000L) / 2176L]) ) / 180L;  // remove scaling by 100 here
+          servo_new_angle = servo_start + (((long)servo_span) * accel_table[percentage]) / 10000L;  // Remove scaling by 10000 here
           setServoAngle(index + 1, servo_new_angle);
           Serial.print(servo_new_angle, DEC);
           Serial.print(" ");          

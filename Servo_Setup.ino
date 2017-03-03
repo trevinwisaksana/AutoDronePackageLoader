@@ -19,12 +19,7 @@ void setServoAngle(int servo_number, int servo_angle) {
   if ((servo_number <= 0) || (servo_number > NUMBER_OF_SERVOS) ) {
       return;
   }  
-  /*If the servo is somehow reversed, flip the angle 
-   * to unreverse the operation 
-   */
-  if (servo_rev[servo_number] == true) {
-    servo_angle = 180 - servo_angle;
-  }
+  
   /* 
    * If the servo goes beyond the usable angle,
    * set the servo angle to the maximum value 
@@ -40,6 +35,13 @@ void setServoAngle(int servo_number, int servo_angle) {
   }
 
   servo_setting[servo_number] = servo_angle;
+
+  /*If the servo is somehow reversed, flip the angle 
+   * to unreverse the operation 
+   */
+  if (servo_rev[servo_number] == true) {
+    servo_angle = 180 - servo_angle;
+  }
   
   /* Depending on the servo number (which is defined in the Main),
    * move the specific servo based on the servo angle set.
