@@ -1,5 +1,5 @@
 
-
+// CommandBuffer only accepts 8 items
 char commandBuffer[8];
 byte index = 0;
 
@@ -36,6 +36,7 @@ bool scan(int * pFirst, int * pSecond)
              Serial.print(" Angle = ");
              Serial.println(*pSecond, DEC);
              ended = true;
+             // Resets the index
              index = 0;
          }
       }
@@ -82,4 +83,5 @@ int decToInt(unsigned int * index) {
 exit:
   return (returnValue);
 }
+
 

@@ -1,10 +1,10 @@
-/*
-
-
-*/
+/* 
+ *
+ */
 
 #include <Servo.h>
-#include <math.h>
+
+// Defining the servo values
 #define SERVO_BASE     1
 #define SERVO_SHOULDER 2
 #define SERVO_ELBOW    3
@@ -31,13 +31,16 @@ char shoulderState;
 char elbowState;
 char testingState;
 
-unsigned long previousMillis = 0;
-const long interval = 50;
+int pos = 90;              
+int increment = 1;        
+int updateInterval = 20;      
+unsigned long lastUpdate; 
+
 
 void setup() {
 
   // Setting the baud rate
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   // Setting pin numbers of servos
   baseServo.attach(10);
@@ -48,12 +51,14 @@ void setup() {
   gripperServo.attach(5);
 
   // Setup each servo to the middle point
-  SET_SERVO_ANGLE(SERVO_BASE, 87); // Base
-  SET_SERVO_ANGLE(SERVO_SHOULDER, 92); // Shoulder
-  SET_SERVO_ANGLE(SERVO_ELBOW, 94); // Elbow
-  SET_SERVO_ANGLE(SERVO_ARM, 90); // Arm
-  SET_SERVO_ANGLE(SERVO_WRIST, 90); // Wrist
-  SET_SERVO_ANGLE(SERVO_GRIPPER, 90); // Gripper
+  setServoAngle(SERVO_BASE, 85); // Base
+  setServoAngle(SERVO_SHOULDER, 92); // Shoulder
+  setServoAngle(SERVO_ELBOW, 94); // Elbow
+  setServoAngle(SERVO_ARM, 90); // Arm
+  setServoAngle(SERVO_WRIST, 90); // Wrist
+  setServoAngle(SERVO_GRIPPER, 90); // Gripper
+
+  testServos();
 
 }
 
@@ -64,18 +69,15 @@ void loop() {
     and the angle it should move to.
   */
   int servo, angle;
+  
+  // Observes the serial monitor
 
-  unsigned long currentMillis = millis();
-
-  if (currentMillis - previousMillis >= interval) {
-      previousMillis = currentMillis;
-      
+#ifdef SERIAL_DEBUG
+  if scan(&servo, &angle) {
+    setServoAngle(servo, angle);
   }
-
-  // Scan observes the Serial monitor for values
-  if (scan(&servo, &angle) ) {
-     Serial.println("Set Servo");
-     SET_SERVO_ANGLE(servo, angle); 
-  }
-
+#endif
+  updateServos();
+   
 }
+
