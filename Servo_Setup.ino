@@ -5,9 +5,9 @@ Servo Helper
 #include "Servo_Helper.h"
 // Lists the maximum, minimum and middle points of each servo
 /*                         base   shoulder elbow  arm    wrist  grip  */
-int servo_max[]  = {NULL,  170,   180,     180,   90,   170,   130};
-int servo_min[]  = {NULL,  20,    0,       0,      0,    10,    60};
-int servo_cen[]  = {NULL,  85,    92,      94,    90,    90,    90};
+int servo_max[]  = {NULL,  170,   180,     180,   90,   170,   140};
+int servo_min[]  = {NULL,  20,      0,      30,    0,    10,    80};
+int servo_cen[]  = {NULL,  85,     92,      94,   90,    90,    90};
 bool servo_rev[] = {false, false, true,    false, false, false, false};
 int servo_setting[NUMBER_OF_SERVOS + 2];
 
@@ -42,6 +42,7 @@ void setServoAngle(int servo_number, int servo_angle) {
   if (servo_rev[servo_number] == true) {
     servo_angle = 180 - servo_angle;
   }
+  
   
   /* Depending on the servo number (which is defined in the Main),
    * move the specific servo based on the servo angle set.

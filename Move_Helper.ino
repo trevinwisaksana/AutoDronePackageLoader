@@ -38,30 +38,30 @@ servo_positions myServosPositions[] = { { 3000, {150, 90,  90, 90, 90,  60} }, /
                                       { 2000,   { 40,  10, 90, 90, 90,  85} }, // Position gripper
                                       { 2000,   { 40,  10, 90, 90, 10,  85} }, // Turn gripper
                                       { 1000,   { 40,  10, 90, 90, 10,  60} }, // Release package
-                                      { 2000,   { 40,  80, 20, 40, 90,  85} }, // Retract arm
-                                      { 2000,   { 40,  80, 90, 90, 90,  85} }, // Slowly move elbow and arm
+                                      { 2000,   { 40,  90, 20, 40, 90,  85} }, // Retract arm
+                                      { 2000,   { 40,  90, 90, 90, 90,  85} }, // Slowly move elbow and arm
                                       
                                       { 5000,   {90,  90, 90, 90, 90,  85} }, // Return back to normal position
        
                                       {    0,   {0, 0, 0, 0, 0, 0} } };
 
 /* Initialize the servo_positions_t struct */
-servo_positions myServosPositions2[] =  { { 3000, {150, 90,  90, 90, 90,  60} }, // Base rotation
-                                        { 3000,   {150, 60,  20, 30, 10,  60} }, // Shoulder moves lower
-                                        { 2000,   {150, 35,  20, 50, 10,  60} }, // Shoulder moves gripper to position
-                                        { 1000,   {150, 35,  20, 50, 10,  88} }, // Gripper grips
-                                        { 2000,   {150, 130, 10, 30, 10,  88} }, // Shoulder moves back
-                                        { 2000,   { 40, 130, 10, 30, 10,  88} }, // Rotate the base
-                                        { 2000,   { 40,  60, 20, 50, 10,  88} }, // Lowers the shoulder
-                                        { 2000,   { 40,  9, 90, 90, 10,  88} }, // Position gripper
-                                        { 2000,   { 40,  9, 90, 90, 10,  88} }, // Turn gripper
-                                        { 1000,   { 40,  9, 90, 90, 10,  60} }, // Release package
-                                        { 2000,   { 40,  30, 40, 40, 10,  85} }, // Retract arm
-                                        { 3000,   { 40,  150, 20, 30, 10,  85} }, // Retract shoulder
-                                        { 1000,   { 40,  120, 90, 90, 90,  85} }, // Slowly move elbow and arm
-                                        { 2000,   { 40,  90, 90, 90, 90,  85} }, // Slowly move elbow and arm
+servo_positions myServosPositions2[] =  { { 3000, {150,  90,  90, 90, 90,   80} }, // Base rotation
+                                        { 3000,   {150,  60,  30, 30, 10,   80} }, // Shoulder moves lower
+                                        { 2000,   {150,  35,  30, 50, 10,   80} }, // Shoulder moves gripper to position
+                                        { 1000,   {150,  35,  30, 50, 10,  130} }, // Gripper grips
+                                        { 2000,   {150, 130,  30, 30, 10,  130} }, // Shoulder moves back
+                                        { 2000,   { 40, 130,  30, 30, 10,  130} }, // Rotate the base
+                                        { 2000,   { 40,  60,  30, 50, 10,  130} }, // Lowers the shoulder
+                                        { 2000,   { 40,  10,  90, 90, 10,  130} }, // Position gripper
+                                        { 2000,   { 40,  10,  90, 90, 10,   80} }, // Turn gripper
+                                        { 1000,   { 40,  10,  90, 90, 10,   80} }, // Release package
+                                        { 2000,   { 40,  30,  40, 60, 10,  130} }, // Retract arm
+                                        { 3000,   { 40, 150,  40, 60, 10,  130} }, // Retract shoulder
+                                        { 3000,   { 40,  90,  90, 90, 90,  130} }, // Slowly move elbow and arm
+                                        { 2000,   { 40,  90,  90, 90, 90,  130} }, // Slowly move elbow and arm
                                         
-                                        { 5000,   {90,  90, 90, 90, 90,  85} }, // Return back to normal position
+                                        { 5000,   { 90,  90, 90, 90, 90,   90} }, // Return back to normal position
          
                                         {    0,   {0, 0, 0, 0, 0, 0} } };
 
