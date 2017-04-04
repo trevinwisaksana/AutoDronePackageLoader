@@ -1,2 +1,2 @@
-# AutoDronePackageLoader
-Codebase for a robotic arm that is designed to load small packages to a quadcopter. The robotic arm that is used is a 6 DOF robot arm. A tutorial on how to use this codebase will be included soon. 
+# Automatic Drone Package Loader
+Codebase for a robotic arm that is designed to load small packages to a quadcopter. The robotic arm that is used is a 6 DOF robot arm. The arm moves slowly at a given pace to increase the life of the servo. Also take into account that this code is specifically tailored for the servo motors that I have used which has its own unique limits. A tutorial on how to use this codebase will be included soon where anyone can adjust their servo limits to the code. 
